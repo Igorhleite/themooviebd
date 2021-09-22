@@ -1,4 +1,4 @@
-package com.example.themooviebd
+package com.igorleite.themooviebd
 
 import org.junit.Test
 
