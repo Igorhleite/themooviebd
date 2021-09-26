@@ -1,10 +1,7 @@
-package com.igorleite.themooviebd.data.model
+package com.igorleite.themooviebd.data.model.dto
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class MovieModel(
     @SerializedName("Title")
     var title: String,
@@ -12,4 +9,4 @@ data class MovieModel(
     var poster: String,
     var favorite: Boolean,
     var imdbID: String,
-) : Parcelable
+)

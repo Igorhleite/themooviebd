@@ -1,4 +1,4 @@
-package com.igorleite.themooviebd.ui
+package com.igorleite.themooviebd.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.igorleite.themooviebd.ui
+package com.igorleite.themooviebd.ui.fragment
 
 import android.os.Bundle
 import android.os.Handler
@@ -12,21 +12,49 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igorleite.themooviebd.databinding.FragmentHomeBinding
+import com.igorleite.themooviebd.domain.local.GetMovieById
+import com.igorleite.themooviebd.ui.viewmodel.HomeViewModel
+import com.igorleite.themooviebd.ui.adapter.MoviePagingAdapter
+import com.igorleite.themooviebd.ui.adapter.paging.MovieLoadStateAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
 
+@ExperimentalPagingApi
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
-    @Inject
-    lateinit var movieAdapter: MoviePagingAdapter
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: HomeViewModel by viewModels()
+    private var endOfSearch: Boolean = false
+
+    @Inject
+    lateinit var getMovieById: GetMovieById
+
+    private val movieAdapter by lazy {
+        MoviePagingAdapter(lifecycle, getMovieById) { movie, clickType, _ ->
+            when (clickType) {
+                ClickType.FAVORITE_MOVIE -> {
+                    when (movie.favorite) {
+                        true -> {
+                            viewModel.setMovieFavorite(movie)
+                        }
+                        false -> {
+                            viewModel.removeMovieFavorite(movie)
+                        }
+                    }
+                }
+                ClickType.OPEN_DETAIL -> {
+
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,7 +74,13 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initActionsListener()
         initObserver()
+        initAdapterActions()
         initRecyclerView()
+    }
+
+    private fun initAdapterActions() {
+        with(movieAdapter) {
+        }
     }
 
     private fun initActionsListener() {
@@ -69,10 +103,12 @@ class HomeFragment : Fragment() {
             with(binding) {
                 swipeRefresh.isRefreshing = false
                 with(movieAdapter) {
+                    errorScreen.root.isVisible = this.itemCount == 0
                     submitData(lifecycle, pagingData)
                     launchOnLifecycleScope {
                         loadStateFlow.collectLatest { _loadStates ->
-                            errorScreen.root.isVisible = _loadStates.refresh is LoadState.Error
+                            errorScreen.root.isVisible =
+                                this.itemCount == 0 && _loadStates.refresh is LoadState.Error
                             progressBar.isVisible = _loadStates.refresh is LoadState.Loading
                             checkIfEndOfPaginationReached(_loadStates)
                         }
@@ -80,6 +116,7 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+
     }
 
     private fun initRecyclerView() {
@@ -96,9 +133,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkIfEndOfPaginationReached(loadState: CombinedLoadStates) {
-        if (loadState.append.endOfPaginationReached) {
+        if (loadState.append.endOfPaginationReached && !endOfSearch) {
             Snackbar.make(binding.root, "End Of Search", Snackbar.LENGTH_SHORT)
                 .show()
+            endOfSearch = true
         }
     }
 
@@ -108,8 +146,13 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.getMoviesList("", "Marvel")
+    override fun onDestroy() {
+        super.onDestroy()
+        movieAdapter.jobCancel()
     }
+
+    enum class ClickType {
+        OPEN_DETAIL, FAVORITE_MOVIE
+    }
+
 }
