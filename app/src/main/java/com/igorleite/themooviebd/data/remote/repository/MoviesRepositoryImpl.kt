@@ -1,6 +1,6 @@
 package com.igorleite.themooviebd.data.remote.repository
 
-import com.igorleite.themooviebd.data.model.SearchModel
+import com.igorleite.themooviebd.data.model.dto.SearchModel
 import com.igorleite.themooviebd.data.remote.ApiClient
 import retrofit2.Response
 import javax.inject.Inject
@@ -13,6 +13,7 @@ class MoviesRepositoryImpl @Inject constructor(
         search: String,
         page: String
     ): Response<SearchModel> {
+        println("<> ${page.toString()}")
         return apiClient.searchByName(type, search, page)
     }
 }

@@ -1,7 +1,7 @@
 package com.igorleite.themooviebd.data.remote
 
 import com.igorleite.themooviebd.BuildConfig
-import com.igorleite.themooviebd.data.model.SearchModel
+import com.igorleite.themooviebd.data.model.dto.SearchModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

@@ -1,6 +1,6 @@
 package com.igorleite.themooviebd.data.remote.repository
 
-import com.igorleite.themooviebd.data.model.SearchModel
+import com.igorleite.themooviebd.data.model.dto.SearchModel
 import retrofit2.Response
 
 interface MoviesRepository {

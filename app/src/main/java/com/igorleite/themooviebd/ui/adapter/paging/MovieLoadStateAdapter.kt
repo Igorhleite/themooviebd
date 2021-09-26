@@ -1,15 +1,18 @@
-package com.igorleite.themooviebd.ui
+package com.igorleite.themooviebd.ui.adapter.paging
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.igorleite.themooviebd.R
 import com.igorleite.themooviebd.databinding.LoadStateAdapterBinding
+import com.igorleite.themooviebd.ui.adapter.MoviePagingAdapter
 
+@ExperimentalPagingApi
 class MovieLoadStateAdapter(
     private val adapter: MoviePagingAdapter
 ) : LoadStateAdapter<MovieLoadStateAdapter.NetworkStateItemViewHolder>() {
@@ -31,7 +34,9 @@ class MovieLoadStateAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.retryButton.setOnClickListener { retryCallback() }
+            binding.retryButton.setOnClickListener {
+                retryCallback.invoke()
+            }
         }
 
         fun bind(loadState: LoadState) {

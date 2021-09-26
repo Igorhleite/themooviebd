@@ -1,6 +1,7 @@
 package com.igorleite.themooviebd.di
 
 import com.igorleite.themooviebd.data.remote.ApiClient
+import com.igorleite.themooviebd.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +18,7 @@ object RetrofitModule {
     @Provides
     fun provideRetrofit(): Retrofit.Builder {
         return Retrofit.Builder()
-            .baseUrl("https://www.omdbapi.com/")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
 

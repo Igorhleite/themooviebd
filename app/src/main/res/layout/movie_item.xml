@@ -21,6 +21,15 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/movie_image" />
 
+        <CheckBox
+            android:id="@+id/movie_favorite_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/movie_image"/>
+
 
         <TextView
             android:id="@+id/movie_title"
