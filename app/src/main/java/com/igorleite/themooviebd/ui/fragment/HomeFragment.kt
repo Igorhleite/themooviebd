@@ -1,5 +1,6 @@
 package com.igorleite.themooviebd.ui.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper.getMainLooper
@@ -18,9 +19,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igorleite.themooviebd.databinding.FragmentHomeBinding
 import com.igorleite.themooviebd.domain.local.GetMovieById
-import com.igorleite.themooviebd.ui.viewmodel.HomeViewModel
 import com.igorleite.themooviebd.ui.adapter.MoviePagingAdapter
 import com.igorleite.themooviebd.ui.adapter.paging.MovieLoadStateAdapter
+import com.igorleite.themooviebd.ui.viewmodel.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
@@ -74,13 +75,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initActionsListener()
         initObserver()
-        initAdapterActions()
         initRecyclerView()
-    }
-
-    private fun initAdapterActions() {
-        with(movieAdapter) {
-        }
     }
 
     private fun initActionsListener() {
@@ -88,6 +83,7 @@ class HomeFragment : Fragment() {
             swipeRefresh.setOnRefreshListener {
                 movieAdapter.refresh()
             }
+
             errorScreen.btErrorTryAgain.setOnClickListener {
                 errorScreen.root.isVisible = false
                 progressBar.isVisible = true
@@ -120,14 +116,25 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        with(binding) {
-            homeRecyclerView.apply {
+        with(binding.homeRecyclerView) {
+            layoutManager =
+                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            adapter = movieAdapter.withLoadStateHeaderAndFooter(
+                header = MovieLoadStateAdapter(movieAdapter),
+                footer = MovieLoadStateAdapter(movieAdapter)
+            )
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        with(binding.homeRecyclerView) {
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                layoutManager =
+                    StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 layoutManager =
                     StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-                adapter = movieAdapter.withLoadStateHeaderAndFooter(
-                    header = MovieLoadStateAdapter(movieAdapter),
-                    footer = MovieLoadStateAdapter(movieAdapter)
-                )
             }
         }
     }
