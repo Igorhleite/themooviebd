@@ -1,16 +1,16 @@
-package com.example.themooviebd.ui
+package com.igorleite.themooviebd.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.themooviebd.databinding.FragmentHomeBinding
+import com.igorleite.themooviebd.databinding.FragmentMovieDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class HomeFragment : Fragment() {
-
-    private var _binding: FragmentHomeBinding? = null
+@AndroidEntryPoint
+class MovieDetailFragment : Fragment() {
+    private var _binding: FragmentMovieDetailBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,7 +18,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -26,5 +26,4 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
