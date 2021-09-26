@@ -132,10 +132,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun checkScreenOrientation(orientation: Int) {
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.homeRecyclerView.applyLayoutManagerHorizontal()
-        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            binding.homeRecyclerView.applyLayoutManagerVertical()
+        with(binding.homeRecyclerView) {
+            if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                applyLayoutManagerHorizontal()
+            } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+                applyLayoutManagerVertical()
+            }
         }
     }
 
