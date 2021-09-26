@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.paging.CombinedLoadStates
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.igorleite.themooviebd.databinding.FragmentHomeBinding
@@ -117,8 +118,7 @@ class HomeFragment : Fragment() {
 
     private fun initRecyclerView() {
         with(binding.homeRecyclerView) {
-            layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            checkScreenOrientation(requireActivity().resources.configuration.orientation)
             adapter = movieAdapter.withLoadStateHeaderAndFooter(
                 header = MovieLoadStateAdapter(movieAdapter),
                 footer = MovieLoadStateAdapter(movieAdapter)
@@ -128,15 +128,25 @@ class HomeFragment : Fragment() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        with(binding.homeRecyclerView) {
-            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                layoutManager =
-                    StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
-            } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-                layoutManager =
-                    StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-            }
+        checkScreenOrientation(newConfig.orientation)
+    }
+
+    private fun checkScreenOrientation(orientation: Int) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.homeRecyclerView.applyLayoutManagerHorizontal()
+        } else if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            binding.homeRecyclerView.applyLayoutManagerVertical()
         }
+    }
+
+    private fun RecyclerView.applyLayoutManagerHorizontal() {
+        layoutManager =
+            StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL)
+    }
+
+    private fun RecyclerView.applyLayoutManagerVertical() {
+        layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
     }
 
     private fun checkIfEndOfPaginationReached(loadState: CombinedLoadStates) {
