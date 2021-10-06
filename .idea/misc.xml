@@ -3,11 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable-v24/search_text_view_bg_enable.xml" value="0.2" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/image_view_radius.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/image_view_top_radius.xml" value="0.265625" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_button_bg.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_text_view_bg.xml" value="0.2" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_text_view_bg_enable.xml" value="0.2" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_tv_background.xml" value="0.2" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_tv_bg_disable.xml" value="0.21145833333333333" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/search_tv_bg_enable.xml" value="0.21145833333333333" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/text_view_radius.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/view_dark_linear_fragment.xml" value="0.253125" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/view_dark_linear_gradient.xml" value="0.21944444444444444" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/drawable/view_linear_gradient.xml" value="0.21944444444444444" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/layout/custom_tv_search.xml" value="0.33" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/layout/error_screen.xml" value="0.19270833333333334" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/igor/Desktop/Studing/TheMoovieBD/app/src/main/res/layout/fragment_movie_detail.xml" value="0.20520833333333333" />

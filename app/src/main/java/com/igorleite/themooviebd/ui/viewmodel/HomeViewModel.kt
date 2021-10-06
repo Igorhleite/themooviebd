@@ -32,10 +32,6 @@ class HomeViewModel
     val movieList get() = _movieList
 
 
-    init {
-        getMoviesFromMediator("", "iron man")
-    }
-
     /** This function implements paging 3
      * Its works without mediator.
      * performs paging, but without local cache
@@ -44,7 +40,7 @@ class HomeViewModel
      ** @sample getMoviesFromPagingWithoutMediator("movie","marvel")
      * @author Igorhleite
      **/
-    fun getMoviesFromPagingWithoutMediator(type: String, search: String) {
+    private fun getMoviesFromPagingWithoutMediator(type: String, search: String) {
         viewModelScope.launch {
             Pager(PagingConfig(pageSize = Constants.PAGE_SIZE)) {
                 MoviePaging(getMoviesByName, type, search)
@@ -62,7 +58,7 @@ class HomeViewModel
      ** @sample getMoviesFromPagingWithoutMediator("movie","marvel")
      * @author Igorhleite
      **/
-    private fun getMoviesFromMediator(type: String, search: String) {
+    fun getMoviesFromMediator(type: String, search: String) {
         viewModelScope.launch {
             Pager(
                 config = PagingConfig(

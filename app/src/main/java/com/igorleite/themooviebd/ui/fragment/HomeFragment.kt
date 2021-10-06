@@ -23,9 +23,11 @@ import com.igorleite.themooviebd.domain.local.GetMovieById
 import com.igorleite.themooviebd.ui.adapter.MoviePagingAdapter
 import com.igorleite.themooviebd.ui.adapter.paging.MovieLoadStateAdapter
 import com.igorleite.themooviebd.ui.viewmodel.HomeViewModel
+import com.igorleite.themooviebd.utils.showToastNotification
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import javax.inject.Inject
+
 
 @ExperimentalPagingApi
 @AndroidEntryPoint
@@ -77,6 +79,7 @@ class HomeFragment : Fragment() {
         initActionsListener()
         initObserver()
         initRecyclerView()
+        setActions()
     }
 
     private fun initActionsListener() {
@@ -156,6 +159,19 @@ class HomeFragment : Fragment() {
             Snackbar.make(binding.root, "End Of Search", Snackbar.LENGTH_SHORT)
                 .show()
             endOfSearch = true
+        }
+    }
+
+    private fun setActions() {
+        with(binding) {
+            ciSearchField.apply {
+                eiSetOnBtOutClickListener {
+                    when (eiGetEditTextField().isBlank()) {
+                        true -> this.showToastNotification("Title is required to perform the search!")
+                        else -> viewModel.getMoviesFromMediator("", eiGetEditTextField())
+                    }
+                }
+            }
         }
     }
 
